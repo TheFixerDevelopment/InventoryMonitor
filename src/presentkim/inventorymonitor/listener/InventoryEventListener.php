@@ -26,8 +26,9 @@ class InventoryEventListener implements Listener{
         if (!$event->isCancelled()) {
             $player = $event->getEntity();
             if ($player instanceof Player) {
-                if (isset(SyncInventory::$instances[$playerName = $player->getLowerCaseName()])) {
-                    SyncInventory::$instances[$playerName]->setItem($event->getSlot(), $event->getNewItem(), true, false);
+                $syncInventory = SyncInventory::$instances[$player->getLowerCaseName()] ?? null;
+                if ($syncInventory !== null) {
+                    $syncInventory->setItem($event->getSlot(), $event->getNewItem(), true, false);
                 }
             }
         }

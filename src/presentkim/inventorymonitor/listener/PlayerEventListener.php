@@ -24,9 +24,9 @@ class PlayerEventListener implements Listener{
     public function onPlayerJoinEvent(PlayerJoinEvent $event){
         if (!$event->isCancelled()) {
             $player = $event->getPlayer();
-            if (isset(SyncInventory::$instances[$playerName = $player->getLowerCaseName()])) {
+            $syncInventory = SyncInventory::$instances[$player->getLowerCaseName()] ?? null;
+            if ($syncInventory !== null) {
                 $inventory = $player->getInventory();
-                $syncInventory = SyncInventory::$instances[$playerName];
                 for ($i = 0, $size = $inventory->getSize(); $i < $size; ++$i) {
                     $inventory->setItem($i, $syncInventory->getItem($i));
                 }
