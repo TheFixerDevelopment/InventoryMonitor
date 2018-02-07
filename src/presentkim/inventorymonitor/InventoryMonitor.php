@@ -7,7 +7,9 @@ use presentkim\inventorymonitor\command\PoolCommand;
 use presentkim\inventorymonitor\command\subcommands\{
   ViewSubCommand, LangSubCommand, ReloadSubCommand
 };
-use presentkim\inventorymonitor\listener\InventoryEventListener;
+use presentkim\inventorymonitor\listener\{
+  InventoryEventListener, PlayerEventListener
+};
 use presentkim\inventorymonitor\util\Translation;
 
 class InventoryMonitor extends PluginBase{
@@ -36,6 +38,7 @@ class InventoryMonitor extends PluginBase{
     public function onEnable() : void{
         $this->load();
         $this->getServer()->getPluginManager()->registerEvents(new InventoryEventListener(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new PlayerEventListener(), $this);
     }
 
     public function load() : void{
