@@ -27,8 +27,8 @@ class SyncInventory extends CustomInventory{
     /** @var NetworkLittleEndianNBTStream|null */
     private static $nbtWriter = null;
 
-    /** @var  self[] */
-    public static $synchros = [];
+    /** @var self[] */
+    public static $instances = [];
 
     /** CompoundTag */
     private $nbt;

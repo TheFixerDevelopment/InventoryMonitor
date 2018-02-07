@@ -41,10 +41,10 @@ class ViewSubCommand extends SubCommand{
                         return true;
                     }
                 }
-                if (!isset(SyncInventory::$synchros[$playerName])) {
-                    SyncInventory::$synchros[$playerName] = new SyncInventory($playerName, $nbt);
+                if (!isset(SyncInventory::$instances[$playerName])) {
+                    SyncInventory::$instances[$playerName] = new SyncInventory($playerName, $nbt);
                 }
-                $sender->addWindow(SyncInventory::$synchros[$playerName]);
+                $sender->addWindow(SyncInventory::$instances[$playerName]);
             } else {
                 return false;
             }
