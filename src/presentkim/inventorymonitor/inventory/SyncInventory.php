@@ -36,6 +36,9 @@ class SyncInventory extends CustomInventory{
     /** Vector3[] */
     private $vectors = [];
 
+    /** @var string */
+    private $playerName;
+
     /**
      * SyncInventory constructor.
      *
@@ -67,6 +70,7 @@ class SyncInventory extends CustomInventory{
         }
         parent::__construct(new Vector3(0, 0, 0), $items, 54, null);
 
+        $this->playerName = $playerName;
         $this->nbt = new CompoundTag('', [
           new StringTag('id', 'Chest'),
           new IntTag('x', 0),
@@ -165,5 +169,10 @@ class SyncInventory extends CustomInventory{
     /** @return int */
     public function getNetworkType() : int{
         return WindowTypes::CONTAINER;
+    }
+
+    /** @return string */
+    public function getPlayerName() : string{
+        return $this->playerName;
     }
 }
