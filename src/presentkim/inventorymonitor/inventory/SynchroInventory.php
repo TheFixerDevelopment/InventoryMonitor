@@ -129,6 +129,7 @@ class SynchroInventory extends CustomInventory{
         Server::getInstance()->getScheduler()->scheduleDelayedTask(new SendDataPacketTask($who, $pk, $pk2), 5);
     }
 
+    /** @param Player $who */
     public function onClose(Player $who) : void{
         BaseInventory::onClose($who);
         $key = $who->getLowerCaseName();
