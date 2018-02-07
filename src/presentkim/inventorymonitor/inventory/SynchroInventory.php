@@ -63,7 +63,7 @@ class SynchroInventory extends CustomInventory{
                 }
             }
         }
-        parent::__construct(new Vector3(0, 0, 0), $items, 27, null);
+        parent::__construct(new Vector3(0, 0, 0), $items, 54, null);
 
         $this->nbt = new CompoundTag('', [
           new StringTag('id', 'Chest'),
@@ -86,28 +86,30 @@ class SynchroInventory extends CustomInventory{
         if ($this->vectors[$key]->y < 0) {
             $this->vectors[$key]->y = 0;
         }
+        for ($i = 0; $i < 2; $i++) {
+            $pk = new UpdateBlockPacket();
+            $pk->blockId = Block::CHEST;
+            $pk->blockData = 0;
+            $pk->x = $this->vectors[$key]->x + $i;
+            $pk->y = $this->vectors[$key]->y;
+            $pk->z = $this->vectors[$key]->z;
+            $who->sendDataPacket($pk);
 
-        $pk = new UpdateBlockPacket();
-        $pk->blockId = Block::CHEST;
-        $pk->blockData = 0;
-        $pk->x = $this->vectors[$key]->x;
-        $pk->y = $this->vectors[$key]->y;
-        $pk->z = $this->vectors[$key]->z;
-        $who->sendDataPacket($pk);
 
+            $this->nbt->setInt('x', $this->vectors[$key]->x + $i);
+            $this->nbt->setInt('y', $this->vectors[$key]->y);
+            $this->nbt->setInt('z', $this->vectors[$key]->z);
+            $this->nbt->setInt('pairx', $this->vectors[$key]->x + (1 - $i));
+            $this->nbt->setInt('pairz', $this->vectors[$key]->z);
+            self::$nbtWriter->setData($this->nbt);
 
-        $this->nbt->setInt('x', $this->vectors[$key]->x);
-        $this->nbt->setInt('y', $this->vectors[$key]->y);
-        $this->nbt->setInt('z', $this->vectors[$key]->z);
-        self::$nbtWriter->setData($this->nbt);
-
-        $pk = new BlockEntityDataPacket();
-        $pk->x = $this->vectors[$key]->x;
-        $pk->y = $this->vectors[$key]->y;
-        $pk->z = $this->vectors[$key]->z;
-        $pk->namedtag = self::$nbtWriter->write();
-        $who->sendDataPacket($pk);
-
+            $pk = new BlockEntityDataPacket();
+            $pk->x = $this->vectors[$key]->x + $i;
+            $pk->y = $this->vectors[$key]->y;
+            $pk->z = $this->vectors[$key]->z;
+            $pk->namedtag = self::$nbtWriter->write();
+            $who->sendDataPacket($pk);
+        }
 
         $pk = new ContainerOpenPacket();
         $pk->type = WindowTypes::CONTAINER;
@@ -123,20 +125,22 @@ class SynchroInventory extends CustomInventory{
 
     public function onClose(Player $who) : void{
         BaseInventory::onClose($who);
+        $key = $who->getLowerCaseName();
+        for ($i = 0; $i < 2; $i++) {
+            $block = $who->getLevel()->getBlock($vec = $this->vectors[$key]->add($i, 0, 0));
 
-        $block = $who->getLevel()->getBlock($this->vectors[$key = $who->getLowerCaseName()]);
+            $pk = new UpdateBlockPacket();
+            $pk->x = $vec->x;
+            $pk->y = $vec->y;
+            $pk->z = $vec->z;
+            $pk->blockId = $block->getId();
+            $pk->blockData = $block->getDamage();
+            $who->sendDataPacket($pk);
 
-        $pk = new UpdateBlockPacket();
-        $pk->x = $this->vectors[$key]->x;
-        $pk->y = $this->vectors[$key]->y;
-        $pk->z = $this->vectors[$key]->z;
-        $pk->blockId = $block->getId();
-        $pk->blockData = $block->getDamage();
-        $who->sendDataPacket($pk);
-
-        $tile = $who->getLevel()->getTile($this->vectors[$key]);
-        if ($tile instanceof Spawnable) {
-            $who->sendDataPacket($tile->createSpawnPacket());
+            $tile = $who->getLevel()->getTile($vec);
+            if ($tile instanceof Spawnable) {
+                $who->sendDataPacket($tile->createSpawnPacket());
+            }
         }
         unset($this->vectors[$key]);
     }
@@ -148,7 +152,7 @@ class SynchroInventory extends CustomInventory{
 
     /** @return int */
     public function getDefaultSize() : int{
-        return 27;
+        return 54;
     }
 
     /** @return int */
