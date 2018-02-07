@@ -86,27 +86,28 @@ class SynchroInventory extends CustomInventory{
         if ($this->vectors[$key]->y < 0) {
             $this->vectors[$key]->y = 0;
         }
+        $vec = $this->vectors[$key];
         for ($i = 0; $i < 2; $i++) {
             $pk = new UpdateBlockPacket();
             $pk->blockId = Block::CHEST;
             $pk->blockData = 0;
-            $pk->x = $this->vectors[$key]->x + $i;
-            $pk->y = $this->vectors[$key]->y;
-            $pk->z = $this->vectors[$key]->z;
+            $pk->x = $vec->x + $i;
+            $pk->y = $vec->y;
+            $pk->z = $vec->z;
             $who->sendDataPacket($pk);
 
 
-            $this->nbt->setInt('x', $this->vectors[$key]->x + $i);
-            $this->nbt->setInt('y', $this->vectors[$key]->y);
-            $this->nbt->setInt('z', $this->vectors[$key]->z);
-            $this->nbt->setInt('pairx', $this->vectors[$key]->x + (1 - $i));
-            $this->nbt->setInt('pairz', $this->vectors[$key]->z);
+            $this->nbt->setInt('x', $vec->x + $i);
+            $this->nbt->setInt('y', $vec->y);
+            $this->nbt->setInt('z', $vec->z);
+            $this->nbt->setInt('pairx', $vec->x + (1 - $i));
+            $this->nbt->setInt('pairz', $vec->z);
             self::$nbtWriter->setData($this->nbt);
 
             $pk = new BlockEntityDataPacket();
-            $pk->x = $this->vectors[$key]->x + $i;
-            $pk->y = $this->vectors[$key]->y;
-            $pk->z = $this->vectors[$key]->z;
+            $pk->x = $vec->x + $i;
+            $pk->y = $vec->y;
+            $pk->z = $vec->z;
             $pk->namedtag = self::$nbtWriter->write();
             $who->sendDataPacket($pk);
         }
@@ -114,9 +115,9 @@ class SynchroInventory extends CustomInventory{
         $pk = new ContainerOpenPacket();
         $pk->type = WindowTypes::CONTAINER;
         $pk->entityUniqueId = -1;
-        $pk->x = $this->vectors[$key]->x;
-        $pk->y = $this->vectors[$key]->y;
-        $pk->z = $this->vectors[$key]->z;
+        $pk->x = $vec->x;
+        $pk->y = $vec->y;
+        $pk->z = $vec->z;
         $pk->windowId = $who->getWindowId($this);
         $who->sendDataPacket($pk);
 
