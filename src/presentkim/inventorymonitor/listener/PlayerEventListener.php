@@ -22,14 +22,12 @@ class PlayerEventListener implements Listener{
      * @param PlayerJoinEvent $event
      */
     public function onPlayerJoinEvent(PlayerJoinEvent $event){
-        if (!$event->isCancelled()) {
-            $player = $event->getPlayer();
-            $syncInventory = SyncInventory::$instances[$player->getLowerCaseName()] ?? null;
-            if ($syncInventory !== null) {
-                $inventory = $player->getInventory();
-                for ($i = 0, $size = $inventory->getSize(); $i < $size; ++$i) {
-                    $inventory->setItem($i, $syncInventory->getItem($i));
-                }
+        $player = $event->getPlayer();
+        $syncInventory = SyncInventory::$instances[$player->getLowerCaseName()] ?? null;
+        if ($syncInventory !== null) {
+            $inventory = $player->getInventory();
+            for ($i = 0, $size = $inventory->getSize(); $i < $size; ++$i) {
+                $inventory->setItem($i, $syncInventory->getItem($i));
             }
         }
     }
