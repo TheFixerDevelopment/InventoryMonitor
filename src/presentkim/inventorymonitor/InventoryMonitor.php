@@ -64,7 +64,11 @@ class InventoryMonitor extends PluginBase{
                 $namedTag->setTag($inventoryTag);
                 $this->getServer()->saveOfflinePlayerData($playerName, $namedTag);
             }
+            foreach ($syncInventory->getViewers() as $key => $who) {
+                $syncInventory->close($who);
+            }
         }
+        SyncInventory::$instances = [];
     }
 
     public function load() : void{
