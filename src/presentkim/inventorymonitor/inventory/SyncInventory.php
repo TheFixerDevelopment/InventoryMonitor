@@ -22,7 +22,7 @@ use pocketmine\tile\Spawnable;
 use presentkim\inventorymonitor\task\SendDataPacketTask;
 use presentkim\inventorymonitor\util\Translation;
 
-class SynchroInventory extends CustomInventory{
+class SyncInventory extends CustomInventory{
 
     /** @var NetworkLittleEndianNBTStream|null */
     private static $nbtWriter = null;
@@ -37,7 +37,7 @@ class SynchroInventory extends CustomInventory{
     private $vectors = [];
 
     /**
-     * SynchroInventory constructor.
+     * SyncInventory constructor.
      *
      * @param string      $playerName
      * @param CompoundTag $namedTag
@@ -154,7 +154,7 @@ class SynchroInventory extends CustomInventory{
 
     /** @return string */
     public function getName() : string{
-        return "SynchroInventory";
+        return "SyncInventory";
     }
 
     /** @return int */

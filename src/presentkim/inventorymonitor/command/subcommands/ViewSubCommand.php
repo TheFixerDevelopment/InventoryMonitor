@@ -9,7 +9,7 @@ use presentkim\inventorymonitor\InventoryMonitor as Plugin;
 use presentkim\inventorymonitor\command\{
   PoolCommand, SubCommand
 };
-use presentkim\inventorymonitor\inventory\SynchroInventory;
+use presentkim\inventorymonitor\inventory\SyncInventory;
 use presentkim\inventorymonitor\util\{
   Translation, Utils
 };
@@ -41,10 +41,10 @@ class ViewSubCommand extends SubCommand{
                         return true;
                     }
                 }
-                if (!isset(SynchroInventory::$synchros[$playerName])) {
-                    SynchroInventory::$synchros[$playerName] = new SynchroInventory($playerName, $nbt);
+                if (!isset(SyncInventory::$synchros[$playerName])) {
+                    SyncInventory::$synchros[$playerName] = new SyncInventory($playerName, $nbt);
                 }
-                $sender->addWindow(SynchroInventory::$synchros[$playerName]);
+                $sender->addWindow(SyncInventory::$synchros[$playerName]);
             } else {
                 return false;
             }
