@@ -156,6 +156,24 @@ class SyncInventory extends CustomInventory{
         unset($this->vectors[$key]);
     }
 
+    /**
+     * @param int  $index
+     * @param Item $item
+     * @param bool $send
+     * @param bool $sync
+     *
+     * @return bool
+     */
+    public function setItem(int $index, Item $item, bool $send = true, $sync = true) : bool{
+        if ($sync && $this->playerName !== null) {
+            $player = Server::getInstance()->getPlayerExact($this->playerName);
+            if ($player instanceof Player) {
+                $player->getInventory()->setItem($index, $item, true);
+            }
+        }
+        return parent::setItem($index, $item, $send);
+    }
+
     /** @return string */
     public function getName() : string{
         return "SyncInventory";
