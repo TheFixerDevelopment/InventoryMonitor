@@ -1,0 +1,30 @@
+---
+prefix: "[InventoryMonitor] "
+
+chest-name: "{%0}님의 인벤토리"
+
+command-generic-failure@in-game: "게임 내에서만 사용할 수 있습니다"
+command-generic-failure@permission : "당신은 이 명령어를 사용할 권한이 없습니다"
+command-generic-failure@invalid-player: "{%0}는 잘못된 플레이어 명입니다"
+
+command-inventorymonitor: "inventorymonitor"
+command-inventorymonitor@usage: "/inventorymonitor <{%0}>"
+command-inventorymonitor@usage-separator: " | "
+command-inventorymonitor@description: "InventoryMonitor 메인 명령어"
+command-inventorymonitor@aliases: ["iv"]
+
+command-inventorymonitor-view: "view"
+command-inventorymonitor-view@usage: "/inventorymonitor View <플레이어명>"
+command-inventorymonitor-view@aliases: ["d"]
+
+command-inventorymonitor-lang: "lang"
+command-inventorymonitor-lang@usage: "/inventorymonitor Lang <언어명>"
+command-inventorymonitor-lang@success: "{%0}언어 파일을 불러왔습니다"
+command-inventorymonitor-lang@failure: "{%0}는 잘못된 언어명입니다"
+command-inventorymonitor-lang@aliases: ["language"]
+
+command-inventorymonitor-reload: "reload"
+command-inventorymonitor-reload@usage: "/inventorymonitor Reload"
+command-inventorymonitor-reload@success: "모든 데이터를 불러왔습니다"
+command-inventorymonitor-reload@aliases: ["rl"]
+...

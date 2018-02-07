@@ -1,0 +1,31 @@
+---
+prefix: "[InventoryMonitor] "
+
+chest-name: "{%0}'s inventory"
+
+command-generic-failure@in-game: "Available in game only"
+command-generic-failure@permission : "You do not have permission to use this command"
+command-generic-failure@invalid-player: "{%0} is invalid player name"
+
+command-inventorymonitor: "inventorymonitor"
+command-inventorymonitor@usage: "/inventorymonitor <{%0}>"
+command-inventorymonitor@usage-separator: " | "
+command-inventorymonitor@description: "Main command of InventoryMonitor"
+command-inventorymonitor@aliases: ["iv"]
+
+command-inventorymonitor-view: "view"
+command-inventorymonitor-view@usage: "/inventorymonitor View <player name>"
+command-inventorymonitor-view@success: "Default speed was setted to {%0}"
+command-inventorymonitor-view@aliases: ["d"]
+
+command-inventorymonitor-lang: "lang"
+command-inventorymonitor-lang@usage: "/inventorymonitor Lang <language prefix>"
+command-inventorymonitor-lang@success: "{%0} language file was loaded"
+command-inventorymonitor-lang@failure: "{%0} is invalid language prefix"
+command-inventorymonitor-lang@aliases: ["language"]
+
+command-inventorymonitor-reload: "reload"
+command-inventorymonitor-reload@usage: "/inventorymonitor Reload"
+command-inventorymonitor-reload@success: "All data was reloaded"
+command-inventorymonitor-reload@aliases: ["rl"]
+...
