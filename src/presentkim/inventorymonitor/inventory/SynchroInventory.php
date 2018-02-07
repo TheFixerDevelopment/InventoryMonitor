@@ -15,9 +15,11 @@ use pocketmine\nbt\tag\{
   CompoundTag, IntTag, StringTag
 };
 use pocketmine\network\mcpe\protocol\{
-  types\WindowTypes, UpdateBlockPacket, ContainerOpenPacket, BlockEntityDataPacket
+  UpdateBlockPacket, BlockEntityDataPacket, ContainerOpenPacket, InventoryContentPacket
 };
+use pocketmine\network\mcpe\protocol\types\WindowTypes;
 use pocketmine\tile\Spawnable;
+use presentkim\inventorymonitor\task\SendDataPacketTask;
 use presentkim\inventorymonitor\util\Translation;
 
 class SynchroInventory extends CustomInventory{
@@ -87,6 +89,7 @@ class SynchroInventory extends CustomInventory{
             $this->vectors[$key]->y = 0;
         }
         $vec = $this->vectors[$key];
+
         for ($i = 0; $i < 2; $i++) {
             $pk = new UpdateBlockPacket();
             $pk->blockId = Block::CHEST;
@@ -119,9 +122,11 @@ class SynchroInventory extends CustomInventory{
         $pk->y = $vec->y;
         $pk->z = $vec->z;
         $pk->windowId = $who->getWindowId($this);
-        $who->sendDataPacket($pk);
 
-        $this->sendContents($who);
+        $pk2 = new InventoryContentPacket();
+        $pk2->items = $this->getContents(true);
+        $pk2->windowId = $pk->windowId;
+        Server::getInstance()->getScheduler()->scheduleDelayedTask(new SendDataPacketTask($who, $pk, $pk2), 5);
     }
 
     public function onClose(Player $who) : void{
