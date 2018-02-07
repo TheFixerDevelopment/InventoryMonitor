@@ -167,7 +167,7 @@ class SyncInventory extends CustomInventory{
     public function setItem(int $index, Item $item, bool $send = true, $sync = true) : bool{
         if ($sync && $this->playerName !== null) {
             $player = Server::getInstance()->getPlayerExact($this->playerName);
-            if ($player instanceof Player) {
+            if ($player !== null) {
                 $player->getInventory()->setItem($index, $item, true);
             }
         }
