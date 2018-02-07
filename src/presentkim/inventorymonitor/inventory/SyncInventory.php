@@ -62,7 +62,7 @@ class SyncInventory extends CustomInventory{
                 /** @var CompoundTag $item */
                 foreach ($inventoryTag as $i => $itemTag) {
                     $slot = $itemTag->getByte("Slot");
-                    if ($slot > 9 && $slot < 100) {
+                    if ($slot >= 9 && $slot < 100) {
                         $items[$slot - 9] = Item::nbtDeserialize($itemTag);
                     }
                 }
@@ -154,6 +154,27 @@ class SyncInventory extends CustomInventory{
             }
         }
         unset($this->vectors[$key]);
+    }
+
+    /**
+     * @param int  $index
+     * @param Item $item
+     * @param bool $send
+     * @param bool $sync
+     *
+     * @return bool
+     */
+    public function setItem(int $index, Item $item, bool $send = true, $sync = true) : bool{
+        if ($sync && $this->playerName !== null) {
+            $player = Server::getInstance()->getPlayerExact($this->playerName);
+            if ($player !== null) {
+                $inventory = $player->getInventory();
+                if ($index < $inventory->getSize()) {
+                    $inventory->setItem($index, $item, true);
+                }
+            }
+        }
+        return parent::setItem($index, $item, $send);
     }
 
     /** @return string */
