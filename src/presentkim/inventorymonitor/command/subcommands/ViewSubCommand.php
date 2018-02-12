@@ -17,7 +17,7 @@ use presentkim\inventorymonitor\util\{
 class ViewSubCommand extends SubCommand{
 
     public function __construct(PoolCommand $owner){
-        parent::__construct($owner, 'open');
+        parent::__construct($owner, 'view');
     }
 
     /**
