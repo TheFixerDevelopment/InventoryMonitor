@@ -17,7 +17,7 @@ use presentkim\inventorymonitor\util\{
 class ViewSubCommand extends SubCommand{
 
     public function __construct(PoolCommand $owner){
-        parent::__construct($owner, 'view');
+        parent::__construct($owner, 'open');
     }
 
     /**
@@ -32,7 +32,7 @@ class ViewSubCommand extends SubCommand{
                 $server = Server::getInstance();
                 $playerName = strtolower($args[0]);
                 $nbt = null;
-                $player = $server->getPlayerExact($playerName);
+                $player = $server->getPlayer($playerName);
                 if ($player === null) {
                     if (file_exists("{$server->getDataPath()}players\\{$playerName}.dat")) {
                         $nbt = $server->getOfflinePlayerData($playerName);
