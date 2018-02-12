@@ -93,7 +93,7 @@ class InventoryMonitor extends PluginBase{
 
     public function reloadCommand() : void{
         if ($this->command == null) {
-            $this->command = new PoolCommand($this, 'inventorymonitor');
+            $this->command = new PoolCommand($this, 'invsee');
             $this->command->createSubCommand(ViewSubCommand::class);
             $this->command->createSubCommand(LangSubCommand::class);
             $this->command->createSubCommand(ReloadSubCommand::class);
