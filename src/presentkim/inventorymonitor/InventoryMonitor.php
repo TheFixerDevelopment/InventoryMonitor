@@ -46,7 +46,7 @@ class InventoryMonitor extends PluginBase{
 
     public function onDisable() : void{
         foreach (SyncInventory::$instances as $playerName => $syncInventory) {
-            $player = $this->getServer()->getPlayer($playerName);
+            $player = $this->getServer()->getPlayerExact($playerName);
             if ($player !== null) {
                 $inventory = $player->getInventory();
                 for ($i = 0; $i < 36; ++$i) {
