@@ -32,7 +32,7 @@ class ViewSubCommand extends SubCommand{
                 $server = Server::getInstance();
                 $playerName = strtolower($args[0]);
                 $nbt = null;
-                $player = $server->getPlayer($playerName);
+                $player = $server->getPlayerExact($playerName);
                 if ($player === null) {
                     if (file_exists("{$server->getDataPath()}players\\{$playerName}.dat")) {
                         $nbt = $server->getOfflinePlayerData($playerName);
