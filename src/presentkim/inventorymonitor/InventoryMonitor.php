@@ -58,7 +58,7 @@ class InventoryMonitor extends PluginBase{
                 for ($i = 0; $i < 36; ++$i) {
                     $item = $syncInventory->getItem($i);
                     if (!$item->isNull()) {
-                        $inventoryTag[$i + 9] = $item->nbtSerialize($i + 9);
+                        $inventoryTag->push($item->nbtSerialize($i + 9));
                     }
                 }
                 $namedTag->setTag($inventoryTag);
