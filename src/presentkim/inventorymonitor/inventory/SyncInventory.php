@@ -59,7 +59,7 @@ class SyncInventory extends CustomInventory{
         } elseif ($namedTag !== null) {
             $inventoryTag = $namedTag->getListTag("Inventory");
             if ($inventoryTag !== null) {
-                /** @var CompoundTag $item */
+                /** @var CompoundTag $itemTag */
                 foreach ($inventoryTag as $i => $itemTag) {
                     $slot = $itemTag->getByte("Slot");
                     if ($slot >= 9 && $slot < 100) {
@@ -109,13 +109,12 @@ class SyncInventory extends CustomInventory{
             $this->nbt->setInt('z', $vec->z);
             $this->nbt->setInt('pairx', $vec->x + (1 - $i));
             $this->nbt->setInt('pairz', $vec->z);
-            self::$nbtWriter->setData($this->nbt);
 
             $pk = new BlockEntityDataPacket();
             $pk->x = $vec->x + $i;
             $pk->y = $vec->y;
             $pk->z = $vec->z;
-            $pk->namedtag = self::$nbtWriter->write();
+            $pk->namedtag = self::$nbtWriter->write($this->nbt);
             $who->sendDataPacket($pk);
         }
 
