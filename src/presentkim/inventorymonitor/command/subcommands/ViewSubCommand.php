@@ -34,7 +34,7 @@ class ViewSubCommand extends SubCommand{
                 $nbt = null;
                 $player = $server->getPlayerExact($playerName);
                 if ($player === null) {
-                    if (file_exists("{$server->getDataPath()}players\\{$playerName}.dat")) {
+                    if (file_exists("{$server->getDataPath()}players/{$playerName}.dat")) {
                         $nbt = $server->getOfflinePlayerData($playerName);
                     } else {
                         $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid-player', $args[0]));
