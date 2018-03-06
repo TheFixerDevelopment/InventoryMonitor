@@ -2,7 +2,7 @@
 name:             InventoryMonitor
 main:             presentkim\inventorymonitor\InventoryMonitor
 version:          1.0.3
-api:              [3.0.0, 3.0.0-ALPHA11]
+api:              [3.0.0-ALPHA11]
 author:           PresentKim
 website:          https://github.com/PMMPPlugin/InventoryMonitor
 description:      A plugin show other player's inventory
