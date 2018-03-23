@@ -17,14 +17,14 @@ use presentkim\inventorymonitor\util\Translation;
 
 class InventoryMonitor extends PluginBase{
 
-    /** @var self */
+    /** @var InventoryMonitor */
     private static $instance = null;
 
     /** @var string */
     public static $prefix = '';
 
-    /** @return self */
-    public static function getInstance() : self{
+    /** @return InventoryMonitor */
+    public static function getInstance() : InventoryMonitor{
         return self::$instance;
     }
 
