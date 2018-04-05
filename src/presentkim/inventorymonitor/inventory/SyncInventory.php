@@ -6,6 +6,7 @@ use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\block\Block;
+use pocketmine\item\ItemFactory;
 use pocketmine\inventory\{
   BaseInventory, CustomInventory
 };
@@ -50,10 +51,13 @@ class SyncInventory extends CustomInventory{
         $player = Server::getInstance()->getPlayerExact($playerName);
         if ($player instanceof Player) {
             $inventory = $player->getInventory();
-            for ($i = 0, $size = $inventory->getSize(); $i < $size; ++$i) {
-                $item = $inventory->getItem($i);
-                if (!$item->isNull()) {
-                    $items[$i] = $item;
+            $air = null;
+          
+            foreach($this->slots as $i => $slot){
+   		          if($slot !== null){
+  			      	    $contents[$i] = clone $slot;
+  		          }elseif($includeEmpty){
+  			          	$contents[$i] = $air ?? ($air = ItemFactory::get(Item::AIR, 0, 0));
                 }
             }
         } elseif ($namedTag !== null) {
